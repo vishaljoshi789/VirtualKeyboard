@@ -6,6 +6,8 @@ cap = cv2.VideoCapture(0)
 cap.set(3, 1280)
 cap.set(4, 720)
 
+finalText = ''
+
 detector = handDetector(detectionCon=0.8)
 
 smallAlpha = [['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'], ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';'], ['z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/']]
@@ -15,7 +17,7 @@ def draw(img, buttonList):
     for button in buttonList:
         x, y = button.pos
         w, h = button.size
-        cv2.rectangle(img,button.pos, (x+w, y+h), (255,0,255), cv2.FILLED)
+        cv2.rectangle(img,button.pos, (x+w, y+h), (175,175,175), cv2.FILLED)
         cv2.putText(img, button.text, (x+20, y+65), cv2.FONT_HERSHEY_PLAIN, 4, (255,255,255), 4)
     return img
 
@@ -52,6 +54,10 @@ while True:
                 if l<40:
                     cv2.rectangle(img,button.pos, (x+w, y+h), (0,255,255), cv2.FILLED)
                     cv2.putText(img, button.text, (x+20, y+65), cv2.FONT_HERSHEY_PLAIN, 4, (0,0,0), 4)
+                    finalText += button.text
+
+    cv2.rectangle(img, (50,350), (700, 450), (175,175,175), cv2.FILLED) 
+    cv2.putText(img, finalText, (60,425), cv2.FONT_HERSHEY_PLAIN, 5, (0,0,0), 5)
 
     cv2.imshow('Image', img)
     cv2.waitKey(1)
